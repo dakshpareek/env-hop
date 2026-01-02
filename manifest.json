@@ -23,7 +23,8 @@
         "overlay/overlay.css"
       ],
       "matches": [
-        "<all_urls>"
+        "http://*/*",
+        "https://*/*"
       ]
     }
   ]
