@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Environment Switcher",
+  "version": "1.0.0",
+  "description": "Instantly switch between Local, Staging, and Production environments with one click",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {},
+  "options_page": "options/options.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "setup/setup.html",
+        "setup/setup.js",
+        "setup/setup.css",
+        "overlay/overlay.html",
+        "overlay/overlay-ui.js",
+        "overlay/overlay.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

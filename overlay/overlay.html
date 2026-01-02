@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Environment Switcher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="overlay.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+      </div>
+
+      <!-- New project flow -->
+      <div id="addNew" style="display: none">
+        <div class="env-switcher-container" role="dialog" aria-label="Environment Switcher">
+          <div class="header">
+            <div class="header-title">Select Environment</div>
+            <button class="header-close" data-action="dismiss" aria-label="Close">×</button>
+          </div>
+
+          <div class="chip-grid" id="envButtons" role="listbox" aria-label="Environment type">
+            <button class="env-chip" data-type="local" role="option">
+              <span class="env-chip__label">Local</span>
+              <span class="env-chip__hint">1</span>
+            </button>
+
+            <button class="env-chip" data-type="development" role="option">
+              <span class="env-chip__label">Dev</span>
+              <span class="env-chip__hint">2</span>
+            </button>
+
+            <button class="env-chip" data-type="staging" role="option">
+              <span class="env-chip__label">Staging</span>
+              <span class="env-chip__hint">3</span>
+            </button>
+
+            <button class="env-chip" data-type="production" role="option">
+              <span class="env-chip__label">Prod</span>
+              <span class="env-chip__hint">4</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related project flow -->
+      <div id="relatedProject" style="display: none">
+        <div class="env-switcher-container" role="dialog" aria-label="Environment Switcher">
+          <div class="header">
+            <div class="header-title">
+              <span class="header-pill">Related</span>
+              <span id="relatedProjectName"></span>
+            </div>
+            <button class="header-close" data-action="dismiss" aria-label="Close">×</button>
+          </div>
+
+          <div class="chip-grid" id="relatedEnvButtons" role="listbox" aria-label="Environment type">
+            <button class="env-chip" data-type="local" role="option">
+              <span class="env-chip__label">Local</span>
+              <span class="env-chip__hint">1</span>
+            </button>
+
+            <button class="env-chip" data-type="development" role="option">
+              <span class="env-chip__label">Dev</span>
+              <span class="env-chip__hint">2</span>
+            </button>
+
+            <button class="env-chip" data-type="staging" role="option">
+              <span class="env-chip__label">Staging</span>
+              <span class="env-chip__hint">3</span>
+            </button>
+
+            <button class="env-chip" data-type="production" role="option">
+              <span class="env-chip__label">Prod</span>
+              <span class="env-chip__hint">4</span>
+            </button>
+
+            <button id="notRelatedBtn" class="env-chip env-chip--secondary" type="button" title="Create a new project instead">
+              <span class="env-chip__label">New project</span>
+              <span class="env-chip__hint">N</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configured (rare) -->
+      <div id="configured" style="display: none">
+        <div class="env-switcher-container" role="dialog" aria-label="Environment Switcher">
+          <div class="header">
+            <div class="header-title">Configured</div>
+            <button id="closeConfiguredBtn" class="header-close" aria-label="Close">×</button>
+          </div>
+
+          <div class="configured-hint">
+            Close this and click the extension icon to cycle environments.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="overlay-ui.js"></script>
+  </body>
+</html>

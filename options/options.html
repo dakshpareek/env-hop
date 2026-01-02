@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Environment Switcher - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔄 Environment Switcher</h1>
+      <p>Manage your projects and environments</p>
+    </header>
+
+    <main>
+      <section class="projects-section">
+        <div class="section-header">
+          <h2>Your Projects</h2>
+          <button id="addProjectBtn" class="btn-secondary">+ Add Project</button>
+        </div>
+
+        <div id="projectsList" class="projects-list">
+          <!-- Projects will be loaded here -->
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+          <div class="icon">📦</div>
+          <h3>No projects yet</h3>
+          <p>Start by visiting a website and clicking the extension icon</p>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>⚙️ Settings</h2>
+
+        <div class="setting">
+          <label>
+            <input type="checkbox" id="showNotifications" checked>
+            <span>Show notifications when switching environments</span>
+          </label>
+        </div>
+
+        <div class="setting">
+          <label>
+            <input type="checkbox" id="preserveQuery" checked>
+            <span>Preserve URL query parameters</span>
+          </label>
+        </div>
+
+        <div class="setting">
+          <label>
+            <input type="checkbox" id="preserveHash" checked>
+            <span>Preserve URL hash fragments</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="actions-section">
+        <button id="exportBtn" class="btn-outline">Export Configuration</button>
+        <button id="importBtn" class="btn-outline">Import Configuration</button>
+        <input type="file" id="importFile" accept=".json" style="display: none;">
+      </section>
+    </main>
+  </div>
+
+  <!-- Edit Environment Modal -->
+  <div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Edit Environment</h3>
+      <div class="form-group">
+        <label>Environment Type</label>
+        <select id="editEnvType">
+          <option value="local">📍 Local</option>
+          <option value="development">🔧 Development</option>
+          <option value="staging">🔧 Staging</option>
+          <option value="production">🚀 Production</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>URL</label>
+        <input type="text" id="editEnvUrl" placeholder="https://example.com">
+      </div>
+      <div class="modal-actions">
+        <button id="saveEditBtn" class="btn-primary">Save</button>
+        <button id="cancelEditBtn" class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

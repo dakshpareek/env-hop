@@ -1,0 +1,269 @@
+:root {
+    /* "ThinkPad" palette */
+    --surface-bg: #141416;
+    --surface-border: #2e2e32;
+    --surface-highlight: #3f3f46;
+
+    --text-primary: #ededef;
+    --text-secondary: #a1a1aa;
+
+    --brand-accent: #6e56cf;
+    /* Lunar/Linear-ish purple */
+    --success-green: #10b981;
+
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.4);
+    --shadow-tight: 0 3px 10px rgba(0, 0, 0, 0.35);
+
+    --radius: 12px;
+    --radius-chip: 8px;
+
+    --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-fast: cubic-bezier(0.2, 0, 0, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+}
+
+#app {
+    height: 100%;
+}
+
+/* Loading */
+.loading {
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.spinner {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 3px solid rgba(255, 255, 255, 0.14);
+    border-top: 3px solid var(--brand-accent);
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Container: engineered command center */
+.env-switcher-container {
+    width: 100%;
+    background: var(--surface-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    border: 1px solid var(--surface-border);
+    border-top: 1px solid var(--surface-highlight);
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+
+    animation: enter-scale 0.15s var(--ease-enter) forwards;
+    transform-origin: top right;
+}
+
+@keyframes enter-scale {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px 8px;
+}
+
+.header-title {
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 18px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(110, 86, 207, 0.16);
+    border: 1px solid rgba(110, 86, 207, 0.4);
+    box-shadow: 0 0 12px rgba(110, 86, 207, 0.18);
+}
+
+.header-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.82);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-size: 16px;
+    line-height: 1;
+    transition: all 0.12s var(--ease-fast);
+}
+
+.header-close:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow-tight);
+    transform: translateY(-1px);
+}
+
+.header-close:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: none;
+}
+
+/* Grid */
+.chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 16px 16px;
+}
+
+/* Mechanical chip */
+.env-chip {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 550;
+    cursor: pointer;
+    transition: all 0.1s var(--ease-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    min-height: 36px;
+    flex: 1 1 calc(50% - 8px);
+}
+
+.env-chip__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.env-chip__hint {
+    margin-left: auto;
+    opacity: 0.45;
+    font-size: 10px;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+}
+
+.env-chip:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.env-chip:active {
+    transform: scale(0.96) translateY(1px);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.env-chip.active {
+    background: rgba(110, 86, 207, 0.15);
+    border-color: var(--brand-accent);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(110, 86, 207, 0.25);
+}
+
+/* Saving/Success states (applied by JS) */
+.env-chip[disabled] {
+    opacity: 0.95;
+    cursor: not-allowed;
+}
+
+.env-chip.success {
+    background: var(--success-green) !important;
+    border-color: var(--success-green) !important;
+    color: #07130e !important;
+    transform: none !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.env-chip--secondary {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.env-chip--secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.configured-hint {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 0 16px 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .env-switcher-container {
+        animation: none;
+    }
+
+    .env-chip,
+    .header-close {
+        transition: none;
+    }
+}

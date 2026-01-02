@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Loading state -->
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Add new environment -->
+    <div id="addNew" class="container" style="display: none;">
+      <h2>Add Environment</h2>
+      <div class="url-display">
+        <label>Current URL:</label>
+        <div id="currentUrl" class="url-text"></div>
+      </div>
+
+      <div class="env-selector">
+        <label>Environment Type:</label>
+        <div class="env-buttons" id="envButtons">
+          <button class="env-btn" data-type="local">
+            <span class="icon">📍</span>
+            <span class="label">Local</span>
+          </button>
+          <button class="env-btn" data-type="development">
+            <span class="icon">🔧</span>
+            <span class="label">Dev</span>
+          </button>
+          <button class="env-btn" data-type="staging">
+            <span class="icon">🔧</span>
+            <span class="label">Staging</span>
+          </button>
+          <button class="env-btn" data-type="production">
+            <span class="icon">🚀</span>
+            <span class="label">Production</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="saveBtn" class="btn-primary" disabled>Save Environment</button>
+    </div>
+
+    <!-- Related project detected -->
+    <div id="relatedProject" class="container" style="display: none;">
+      <div class="detection-header">
+        <span class="icon">🔍</span>
+        <h2>Related Project Detected</h2>
+      </div>
+
+      <div class="related-info">
+        <label>This URL appears related to:</label>
+        <div id="relatedProjectName" class="project-name"></div>
+      </div>
+
+      <div class="url-display">
+        <div id="relatedUrl" class="url-text"></div>
+      </div>
+
+      <div class="env-selector">
+        <label id="suggestionText">Is this the Staging environment?</label>
+        <div class="env-buttons" id="relatedEnvButtons">
+          <button class="env-btn" data-type="local">
+            <span class="icon">📍</span>
+            <span class="label">Local</span>
+          </button>
+          <button class="env-btn" data-type="development">
+            <span class="icon">🔧</span>
+            <span class="label">Dev</span>
+          </button>
+          <button class="env-btn" data-type="staging">
+            <span class="icon">🔧</span>
+            <span class="label">Staging</span>
+          </button>
+          <button class="env-btn" data-type="production">
+            <span class="icon">🚀</span>
+            <span class="label">Production</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="addToProjectBtn" class="btn-primary" disabled>Add to Project</button>
+      <button id="notRelatedBtn" class="btn-secondary">Not Related - Create New</button>
+    </div>
+
+    <!-- Configured - shouldn't see this (direct cycle on click) -->
+    <div id="configured" class="container" style="display: none;">
+      <div class="info-message">
+        <p>✓ This site is configured</p>
+        <p class="small">Click the icon to cycle environments</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
