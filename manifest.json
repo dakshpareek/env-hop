@@ -10,9 +10,6 @@
     "contextMenus",
     "scripting"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -21,9 +18,6 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "setup/setup.html",
-        "setup/setup.js",
-        "setup/setup.css",
         "overlay/overlay.html",
         "overlay/overlay-ui.js",
         "overlay/overlay.css"
