@@ -7,7 +7,7 @@
   const IFRAME_WIDTH = 340;
   const IFRAME_HEIGHT = 192;
   const IFRAME_MAX_HEIGHT_VH = 70;
-  const IFRAME_MIN_HEIGHT = 124;
+  const IFRAME_MIN_HEIGHT = 80;
   const IFRAME_MARGIN = 12;
 
   let currentTabId = null;
@@ -56,7 +56,10 @@
         border: 0;
         border-radius: 12px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.22);
-        background: transparent;
+
+        /* Solid surface so empty areas don't show the underlying page */
+        background: #141416;
+
         pointer-events: auto;
         overflow: hidden;
         transition: height 140ms ease;

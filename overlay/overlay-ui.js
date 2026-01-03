@@ -122,10 +122,11 @@ function handleOverlayKeydown(e) {
 }
 
 function requestResize() {
-  const height = Math.max(
-    document.documentElement.scrollHeight,
-    document.body.scrollHeight,
-  );
+  const container = document.querySelector(".env-switcher-container");
+  if (!container) return;
+
+  const rect = container.getBoundingClientRect();
+  const height = Math.ceil(rect.height) + 8;
 
   window.parent.postMessage(
     { type: "ENV_SWITCHER_OVERLAY_RESIZE", height },
