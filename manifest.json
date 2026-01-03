@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Environment Switcher",
+  "name": "EnvHop - Environment Switcher for Developers",
   "version": "1.0.0",
-  "description": "Instantly switch between Local, Staging, and Production environments with one click",
+  "description": "One-click environment switching for developers. Cycle between Local/Dev/Staging/Prod while preserving URL context.",
   "permissions": [
     "storage",
     "tabs",

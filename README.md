@@ -1,4 +1,4 @@
-# Environment Switcher (Chrome Extension)
+# EnvHop - Environment Switcher for Developers
 
 Instantly cycle between environments (Local / Dev / Staging / Prod) for the current site.
 

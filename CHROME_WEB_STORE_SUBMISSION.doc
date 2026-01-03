@@ -1,0 +1,162 @@
+EnvHop — Chrome Web Store Submission (Copy/Paste)
+
+Last updated: 2026-01-03
+
+
+============================================================
+1) BASIC INFORMATION
+============================================================
+
+Extension Name
+EnvHop - Environment Switcher for Developers
+
+Summary (≤132 chars)
+One-click environment switching for developers. Cycle between Local/Dev/Staging/Prod while preserving URL context.
+
+Category
+Developer Tools
+
+Language
+English
+
+
+============================================================
+2) DESCRIPTION (LONG)
+============================================================
+
+EnvHop makes switching between deployment environments effortless for developers and QA engineers.
+
+KEY FEATURES
+
+• One-Click Switching: Click the toolbar icon to instantly cycle through your environments (Local → Dev → Staging → Production)
+• Context Preservation: Maintains your current page path, query parameters, and URL fragments (configurable)
+• Smart Setup Overlay: When a site isn’t configured, an in-page overlay appears for click-to-save configuration
+• Related Detection: If a site looks related to an existing project, EnvHop offers a “Related” setup mode
+• Visual Indicators: Toolbar badge shows your current environment at a glance (L/D/S/P)
+• Keyboard Shortcuts: Power users can switch environments with 1/2/3/4 keys inside the overlay
+• Privacy-First: All configuration stored locally—no servers, no tracking, no data collection
+
+HOW IT WORKS
+
+1. Visit a site you want to configure
+2. Click the EnvHop icon to open the setup overlay
+3. Click an environment chip to save (Local, Dev, Staging, Prod)
+4. Done! Now clicking the icon cycles through your saved environments
+
+EnvHop preserves your current page context, so switching from staging.example.com/orders/123?tab=details takes you to prod.example.com/orders/123?tab=details instantly.
+
+TECHNICAL DETAILS
+
+• Built with Manifest V3
+• Uses activeTab + scripting (only runs when you click the icon)
+• No remote code, no external CDNs
+• Stores config in chrome.storage.local
+
+
+============================================================
+3) STORE LISTING ASSETS (SUGGESTED COPY)
+============================================================
+
+Small Promo Tile (440x280) text
+Switch environments
+in one click
+
+Marquee Promo Tile (1400x560) hero text
+Stop editing URLs.
+Start switching environments.
+One click. Zero friction.
+
+Screenshot captions
+
+1) One-click cycling between environments while preserving your current page context
+2) Smart setup overlay with click-to-save environment configuration
+3) Visual badge indicators show your current environment at a glance
+4) Related detection suggests adding environments to an existing project
+5) Manage all your projects and environments in one place
+
+
+============================================================
+4) PRIVACY PRACTICES
+============================================================
+
+Data usage / collection
+This extension does not collect, store, or transmit any user data outside of the user’s local device. All configuration is stored locally using chrome.storage.local.
+
+Sensitive data
+EnvHop does not collect or transmit personal or sensitive user data.
+
+Remote code
+No. All code is packaged with the extension. No remote code is executed.
+
+Authentication
+No. EnvHop does not provide access to website content that requires authentication. It only switches URLs based on user configuration.
+
+
+============================================================
+5) SINGLE PURPOSE (COPY/PASTE)
+============================================================
+
+This extension allows developers to quickly switch between different deployment environments (Local, Dev, Staging, Production) for web applications by cycling through pre-configured URLs while preserving the current page context.
+
+
+============================================================
+6) PERMISSION JUSTIFICATIONS (COPY/PASTE)
+============================================================
+
+activeTab
+Required to read the current tab’s URL when the user clicks the extension icon, enabling context-aware environment switching and setup overlay injection. Access is only granted after explicit user interaction (click).
+
+storage
+Required to save user-configured projects and environment URLs locally in the browser for persistent access across sessions.
+
+scripting
+Required to inject the setup overlay UI into web pages when users configure new environments. Scripts only execute when the user explicitly clicks the extension icon.
+
+tabs
+Required to navigate the current tab to the target environment URL when switching and to update the toolbar badge based on the current environment.
+
+contextMenus
+Required to provide a management entrypoint (“Manage Environments”) that opens the Options page.
+
+
+============================================================
+7) HOST PERMISSIONS (COPY/PASTE)
+============================================================
+
+Host permissions
+EnvHop does not request broad host permissions. It relies on activeTab for access initiated by user click.
+
+
+============================================================
+8) REVIEWER NOTES (OPTIONAL)
+============================================================
+
+REVIEWER NOTES:
+
+This extension follows Manifest V3 best practices:
+
+1. Minimal Permissions: Uses activeTab and only injects scripts after explicit user interaction (click).
+2. No Remote Code: All functionality is self-contained with no external dependencies or CDN resources.
+3. Privacy-First: Zero data collection, no analytics, no external network requests. All configuration is stored locally.
+4. Single Purpose: Focused exclusively on environment URL switching for developers.
+5. User Control: Setup overlay only appears when needed. Users explicitly configure each environment.
+
+The extension improves developer productivity by reducing the time required to switch between deployment environments while preserving the current page context.
+
+
+============================================================
+9) VERSION NOTES (v1.0.0)
+============================================================
+
+Initial release. Core features: one-click environment cycling, setup overlay, context preservation, keyboard shortcuts, badge indicators, and options management.
+
+
+============================================================
+10) SUPPORT
+============================================================
+
+Support email
+[your-email]@[domain].com
+
+Support URL
+https://github.com/[your-username]/envhop
