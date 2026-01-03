@@ -18,7 +18,29 @@
         <div class="env-switcher-container" role="dialog" aria-label="Environment Switcher">
           <div class="header">
             <div class="header-title">Select Environment</div>
-            <button class="header-close" data-action="dismiss" aria-label="Close">×</button>
+
+            <div class="header-actions">
+              <button
+                id="attachToggleBtn"
+                class="header-attach"
+                type="button"
+                aria-label="Attach this site to an existing project"
+                aria-expanded="false"
+                aria-controls="attachPanel"
+                title="Attach to project"
+              >
+                Attach
+              </button>
+
+              <button class="header-close" data-action="dismiss" aria-label="Close">×</button>
+            </div>
+          </div>
+
+          <div id="attachPanel" class="attach-panel" style="display: none;">
+            <label class="attach-label" for="projectSelect">Attach to project</label>
+            <select id="projectSelect" class="attach-select">
+              <option value="">Choose project…</option>
+            </select>
           </div>
 
           <div class="chip-grid" id="envButtons" role="listbox" aria-label="Environment type">

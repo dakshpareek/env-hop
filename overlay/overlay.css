@@ -19,6 +19,13 @@
 
     --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-fast: cubic-bezier(0.2, 0, 0, 1);
+
+    /* Attach-to-project controls */
+    --control-bg: rgba(255, 255, 255, 0.03);
+    --control-bg-hover: rgba(255, 255, 255, 0.07);
+    --control-border: rgba(255, 255, 255, 0.10);
+    --control-border-hover: rgba(255, 255, 255, 0.18);
+    --focus-ring: 0 0 0 2px rgba(110, 86, 207, 0.35);
 }
 
 * {
@@ -164,6 +171,82 @@ body {
 .header-close:active {
     transform: translateY(0) scale(0.96);
     box-shadow: none;
+}
+
+.header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-attach {
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 10px;
+    border: 1px solid var(--control-border);
+    background: var(--control-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: all 0.12s var(--ease-fast);
+}
+
+.header-attach:hover {
+    background: var(--control-bg-hover);
+    border-color: var(--control-border-hover);
+    box-shadow: var(--shadow-tight);
+    transform: translateY(-1px);
+}
+
+.header-attach:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: none;
+}
+
+.header-attach[aria-expanded="true"] {
+    background: rgba(110, 86, 207, 0.15);
+    border-color: rgba(110, 86, 207, 0.45);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(110, 86, 207, 0.20);
+}
+
+.attach-panel {
+    padding: 0 16px 12px;
+}
+
+.attach-label {
+    display: block;
+    margin: 0 0 6px 0;
+    font-size: 11px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.attach-select {
+    width: 100%;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 10px;
+    border: 1px solid var(--control-border);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+}
+
+.attach-select:focus {
+    border-color: rgba(110, 86, 207, 0.55);
+    box-shadow: var(--focus-ring);
+}
+
+.attach-select option {
+    background: var(--surface-bg);
+    color: var(--text-primary);
 }
 
 /* Grid */

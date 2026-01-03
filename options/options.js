@@ -465,8 +465,13 @@ async function rebuildUrlMapping() {
     project.environments.forEach((env) => {
       const host = extractHost(env.url);
       if (!host) return;
+
       urlMapping[host] = projectId;
-      urlMapping[removePort(host)] = projectId;
+
+      // Avoid collisions across projects on localhost-like hosts by NOT mapping hostWithoutPort.
+      if (!isLocalhostHost(host)) {
+        urlMapping[removePort(host)] = projectId;
+      }
     });
   }
 }
@@ -489,6 +494,16 @@ function extractHost(url) {
 
 function removePort(host) {
   return host.split(":")[0];
+}
+
+function isLocalhostHost(host) {
+  const h = String(host || "").toLowerCase();
+  return (
+    h === "localhost" ||
+    h.startsWith("localhost:") ||
+    h === "127.0.0.1" ||
+    h.startsWith("127.0.0.1:")
+  );
 }
 
 function extractBaseDomain(host) {

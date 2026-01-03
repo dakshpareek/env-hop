@@ -6,6 +6,9 @@ let relatedInitialized = false;
 
 let isSaving = false;
 
+let projectsCache = null;
+let selectedAttachProjectId = "";
+
 function closeOverlay() {
   window.parent.postMessage({ type: "ENV_SWITCHER_OVERLAY_CLOSE" }, "*");
 }
@@ -14,6 +17,31 @@ function normalizeKey(key) {
   return String(key || "")
     .trim()
     .toLowerCase();
+}
+
+function isLocalhostHost(host) {
+  const h = String(host || "").toLowerCase();
+  return (
+    h === "localhost" ||
+    h.startsWith("localhost:") ||
+    h === "127.0.0.1" ||
+    h.startsWith("127.0.0.1:")
+  );
+}
+
+function getHostFromUrl(url) {
+  try {
+    return new URL(url).host;
+  } catch {
+    return "";
+  }
+}
+
+async function loadProjectsOnce() {
+  if (projectsCache) return projectsCache;
+  const data = await chrome.storage.local.get(["projects"]);
+  projectsCache = data.projects || {};
+  return projectsCache;
 }
 
 function clickChipByType(containerId, type) {
@@ -216,21 +244,70 @@ async function initWithContext(url) {
   } else if (project && project.isNewEnvironment) {
     showRelatedProject(project, url);
   } else {
-    showAddNew(url);
+    await showAddNew(url);
   }
 
   requestResizeSoon();
 }
 
-function showAddNew(url) {
+async function showAddNew(url) {
   document.getElementById("loading").style.display = "none";
   document.getElementById("addNew").style.display = "block";
+
+  const attachToggleBtn = document.getElementById("attachToggleBtn");
+  const attachPanel = document.getElementById("attachPanel");
+  const projectSelect = document.getElementById("projectSelect");
+
+  const host = getHostFromUrl(url);
+  const localhost = isLocalhostHost(host);
+
+  // Localhost-first: open attach panel by default (avoids wrong new-project creation)
+  if (localhost) {
+    selectedAttachProjectId = "";
+    if (attachPanel) attachPanel.style.display = "block";
+    if (attachToggleBtn) attachToggleBtn.setAttribute("aria-expanded", "true");
+  }
+
+  if (attachToggleBtn && attachPanel) {
+    attachToggleBtn.addEventListener("click", async () => {
+      const isOpen = attachPanel.style.display === "block";
+      attachPanel.style.display = isOpen ? "none" : "block";
+      attachToggleBtn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+      requestResizeSoon();
+    });
+  }
+
+  if (projectSelect) {
+    const projects = await loadProjectsOnce();
+    projectSelect.innerHTML = `<option value="">Choose project…</option>${Object.values(
+      projects,
+    )
+      .map((p) => `<option value="${p.id}">${p.name}</option>`)
+      .join("")}`;
+
+    projectSelect.addEventListener("change", () => {
+      selectedAttachProjectId = projectSelect.value || "";
+    });
+  }
 
   if (!addNewInitialized) {
     addNewInitialized = true;
 
     setupEnvButtons("envButtons", async (type, chip) => {
       await handleEnvSelection(chip, type, async () => {
+        if (selectedAttachProjectId) {
+          const projects = await loadProjectsOnce();
+          const target = projects[selectedAttachProjectId];
+          if (!target) {
+            alert("Selected project not found.");
+            selectedAttachProjectId = "";
+            if (projectSelect) projectSelect.value = "";
+            return;
+          }
+          await addToExistingProject(currentUrl, type, target);
+          return;
+        }
+
         await saveNewEnvironment(currentUrl, type);
       });
     });
@@ -261,11 +338,13 @@ function showRelatedProject(projectData) {
       suggestedType,
     );
 
-    document.getElementById("notRelatedBtn").addEventListener("click", () => {
-      document.getElementById("relatedProject").style.display = "none";
-      showAddNew(currentUrl);
-      requestResizeSoon();
-    });
+    document
+      .getElementById("notRelatedBtn")
+      .addEventListener("click", async () => {
+        document.getElementById("relatedProject").style.display = "none";
+        await showAddNew(currentUrl);
+        requestResizeSoon();
+      });
   } else {
     const container = document.getElementById("relatedEnvButtons");
     const buttons = container.querySelectorAll(".env-chip");
@@ -337,8 +416,12 @@ async function saveNewEnvironment(url, envType) {
   };
 
   data.projects[projectId] = project;
+
+  // Map exact host (including port). Only map hostWithoutPort for non-localhost hosts to avoid cross-project collisions.
   data.urlMapping[host] = projectId;
-  data.urlMapping[removePort(host)] = projectId;
+  if (!isLocalhostHost(host)) {
+    data.urlMapping[removePort(host)] = projectId;
+  }
 
   await chrome.storage.local.set(data);
 
@@ -377,8 +460,12 @@ async function addToExistingProject(url, envType, project) {
 
   existingProject.environments.push(newEnv);
   data.projects[project.id] = existingProject;
+
+  // Map exact host (including port). Only map hostWithoutPort for non-localhost hosts to avoid cross-project collisions.
   data.urlMapping[host] = project.id;
-  data.urlMapping[removePort(host)] = project.id;
+  if (!isLocalhostHost(host)) {
+    data.urlMapping[removePort(host)] = project.id;
+  }
 
   await chrome.storage.local.set(data);
 
