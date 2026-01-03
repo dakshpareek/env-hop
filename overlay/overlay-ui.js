@@ -9,6 +9,8 @@ let isSaving = false;
 let projectsCache = null;
 let selectedAttachProjectId = "";
 
+let attachPanelWired = false;
+
 function closeOverlay() {
   window.parent.postMessage({ type: "ENV_SWITCHER_OVERLAY_CLOSE" }, "*");
 }
@@ -268,13 +270,31 @@ async function showAddNew(url) {
     if (attachToggleBtn) attachToggleBtn.setAttribute("aria-expanded", "true");
   }
 
-  if (attachToggleBtn && attachPanel) {
-    attachToggleBtn.addEventListener("click", async () => {
-      const isOpen = attachPanel.style.display === "block";
-      attachPanel.style.display = isOpen ? "none" : "block";
-      attachToggleBtn.setAttribute("aria-expanded", isOpen ? "false" : "true");
-      requestResizeSoon();
-    });
+  if (!attachPanelWired) {
+    attachPanelWired = true;
+
+    if (attachToggleBtn && attachPanel) {
+      attachToggleBtn.addEventListener("click", async () => {
+        const isOpen = attachPanel.style.display === "block";
+        attachPanel.style.display = isOpen ? "none" : "block";
+        attachToggleBtn.setAttribute(
+          "aria-expanded",
+          isOpen ? "false" : "true",
+        );
+
+        requestResizeSoon();
+        setTimeout(() => {
+          requestResizeSoon();
+        }, 60);
+      });
+    }
+
+    if (projectSelect) {
+      projectSelect.addEventListener("change", () => {
+        selectedAttachProjectId = projectSelect.value || "";
+        requestResizeSoon();
+      });
+    }
   }
 
   if (projectSelect) {
@@ -285,9 +305,9 @@ async function showAddNew(url) {
       .map((p) => `<option value="${p.id}">${p.name}</option>`)
       .join("")}`;
 
-    projectSelect.addEventListener("change", () => {
-      selectedAttachProjectId = projectSelect.value || "";
-    });
+    if (selectedAttachProjectId) {
+      projectSelect.value = selectedAttachProjectId;
+    }
   }
 
   if (!addNewInitialized) {
@@ -302,6 +322,7 @@ async function showAddNew(url) {
             alert("Selected project not found.");
             selectedAttachProjectId = "";
             if (projectSelect) projectSelect.value = "";
+            requestResizeSoon();
             return;
           }
           await addToExistingProject(currentUrl, type, target);
@@ -314,6 +335,9 @@ async function showAddNew(url) {
   }
 
   requestResizeSoon();
+  setTimeout(() => {
+    requestResizeSoon();
+  }, 60);
 }
 
 function showRelatedProject(projectData) {

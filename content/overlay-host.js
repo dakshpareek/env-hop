@@ -7,7 +7,7 @@
   const IFRAME_WIDTH = 340;
   const IFRAME_HEIGHT = 192;
   const IFRAME_MAX_HEIGHT_VH = 70;
-  const IFRAME_MIN_HEIGHT = 144;
+  const IFRAME_MIN_HEIGHT = 124;
   const IFRAME_MARGIN = 12;
 
   let currentTabId = null;
