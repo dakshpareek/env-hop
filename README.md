@@ -2,6 +2,17 @@
 
 Instantly cycle between environments (Local / Dev / Staging / Prod) for the current site.
 
+## Icons (required for publishing)
+This extension expects PNG icons at:
+
+- `icons/icon16.png`
+- `icons/icon48.png`
+- `icons/icon128.png`
+
+Once those files exist, wire them into `manifest.json` under:
+- `icons`
+- `action.default_icon`
+
 ## Quickstart (Unpacked install)
 
 1. Open `chrome://extensions` (Edge: `edge://extensions`)

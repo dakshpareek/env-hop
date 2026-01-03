@@ -1,0 +1,25 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="128" height="128" rx="20" fill="#141416"/>
+
+  <!-- Ring -->
+  <circle
+    cx="64"
+    cy="64"
+    r="36"
+    stroke="#EDEDEF"
+    stroke-width="9"
+    stroke-linecap="round"
+    stroke-dasharray="200 40"
+    transform="rotate(-40 64 64)"
+  />
+
+  <!-- Arrowhead -->
+  <path d="M92 36 L104 40 L96 52 Z" fill="#EDEDEF"/>
+
+  <!-- Environment dots -->
+  <circle cx="64" cy="16" r="4" fill="#A1A1AA"/>
+  <circle cx="112" cy="64" r="4" fill="#6E56CF"/>
+  <circle cx="64" cy="112" r="4" fill="#A1A1AA"/>
+  <circle cx="16" cy="64" r="4" fill="#A1A1AA"/>
+</svg>
