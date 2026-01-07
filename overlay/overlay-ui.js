@@ -122,14 +122,19 @@ function handleOverlayKeydown(e) {
 }
 
 function requestResize() {
-  const container = document.querySelector(".env-switcher-container");
+  const container = getVisibleContainer();
   if (!container) return;
 
+  // Force reflow/layout to ensure dimensions are calculated
+  void container.offsetHeight;
+
+  // Use getBoundingClientRect for accurate measurements including transforms
   const rect = container.getBoundingClientRect();
   const height = Math.ceil(rect.height) + 8;
+  const width = Math.ceil(rect.width) + 8;
 
   window.parent.postMessage(
-    { type: "ENV_SWITCHER_OVERLAY_RESIZE", height },
+    { type: "ENV_SWITCHER_OVERLAY_RESIZE", height, width },
     "*",
   );
 }
@@ -149,8 +154,21 @@ function getContextFromQueryParams() {
   return { url, tabId: Number.isNaN(tabId) ? null : tabId };
 }
 
+function getVisibleContainer() {
+  // Find the VISIBLE container - there are multiple .env-switcher-container elements
+  // but only one is visible at a time (inside #addNew, #relatedProject, or #configured)
+  const containers = document.querySelectorAll(".env-switcher-container");
+  for (const c of containers) {
+    const parent = c.parentElement;
+    if (parent && parent.style.display !== "none") {
+      return c;
+    }
+  }
+  return null;
+}
+
 function animateAndClose() {
-  const container = document.querySelector(".env-switcher-container");
+  const container = getVisibleContainer();
   if (!container) {
     closeOverlay();
     return;
@@ -228,9 +246,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await initWithContext(currentUrl);
 
   requestResizeSoon();
-  setTimeout(() => {
-    requestResizeSoon();
-  }, 80);
 });
 
 async function initWithContext(url) {

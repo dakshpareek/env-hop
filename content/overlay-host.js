@@ -10,6 +10,10 @@
   const IFRAME_MIN_HEIGHT = 80;
   const IFRAME_MARGIN = 12;
 
+  const IFRAME_MIN_WIDTH = 320;
+  const IFRAME_MAX_WIDTH_VW = 96;
+  const IFRAME_MAX_WIDTH_PX = 520;
+
   let currentTabId = null;
   let currentUrl = "";
 
@@ -62,7 +66,7 @@
 
         pointer-events: auto;
         overflow: hidden;
-        transition: height 140ms ease;
+        transition: height 140ms ease, width 140ms ease;
       }
 
       @media (max-width: 420px) {
@@ -92,11 +96,28 @@
     return bounded;
   }
 
-  function applyIframeHeight(heightPx) {
+  function clampWidth(px) {
+    const vwMax =
+      Math.floor((window.innerWidth * IFRAME_MAX_WIDTH_VW) / 100) -
+      IFRAME_MARGIN * 2;
+    const maxPx = Math.min(IFRAME_MAX_WIDTH_PX, vwMax);
+    const bounded = Math.min(Math.max(px, IFRAME_MIN_WIDTH), maxPx);
+    return bounded;
+  }
+
+  function applyIframeSize({ heightPx, widthPx }) {
     const iframe = document.getElementById(OVERLAY_IFRAME_ID);
     if (!iframe) return;
-    const next = clampHeight(heightPx);
-    iframe.style.height = `${next}px`;
+
+    if (Number.isFinite(heightPx) && heightPx > 0) {
+      const nextH = clampHeight(heightPx);
+      iframe.style.height = `${nextH}px`;
+    }
+
+    if (Number.isFinite(widthPx) && widthPx > 0) {
+      const nextW = clampWidth(widthPx);
+      iframe.style.width = `${nextW}px`;
+    }
   }
 
   function createOverlay() {
@@ -150,9 +171,8 @@
 
     if (message.type === "ENV_SWITCHER_OVERLAY_RESIZE") {
       const height = Number(message.height);
-      if (Number.isFinite(height) && height > 0) {
-        applyIframeHeight(height);
-      }
+      const width = Number(message.width);
+      applyIframeSize({ heightPx: height, widthPx: width });
     }
   });
 
